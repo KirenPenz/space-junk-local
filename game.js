@@ -95,28 +95,26 @@ class Game {
    * been in the beam long enough to catch, or null if there isn't one.
    **/
   resolveBeam(delta) {
-    let held = []
-    for(let junk of this.level.junk){
-      if (this.magpie.beamContains(junk.physics)){
-        junk.beamTime += delta
-        held.push(junk)
-      }
-      else{
-        junk.beamTime = Math.max(0,junk.beamTime-delta)
+    const held = [];
+    for (const junk of this.level.junk) {
+      if (this.magpie.beamContains(junk.physics)) {
+        junk.beamTime += delta;
+        held.push(junk);
+      } else {
+        junk.beamTime = Math.max(0, junk.beamTime - delta);
       }
     }
-    if(held.length > 0){
-      let close = held[0]
-      for(let junk of held){
-        if(junk.beamTime > best.beatTime){
-          close = junk
+    if (held.length > 0) {
+      let close = held[0];
+      for (const junk of held) {
+        if (junk.beamTime > close.beamTime) {
+          close = junk;
         }
       }
-      if(best.beamTime>Game.JUNK_CATCH_TIME_MS){
-        return close
+      if (close.beamTime > Game.JUNK_CATCH_TIME_MS) {
+        return close;
       }
     }
-    return null
     return null;
   }
 
@@ -167,7 +165,7 @@ class Game {
   }
 
   updateScore(reason) {
-    if (reason === "dropoff") {
+    if (reason == 'dropoff') {
       this.score += Game.SCORE_DROPOFF
     }
   }

@@ -27,26 +27,26 @@ class Magpie {
     drawEverywhere({
       offset: this.physics,
       drawFn: () => {
-        if(this.captureJunk){
+        if(this.capturedJunk){
           push()
           rotate(this.physics.rotation)
           translate(0,Magpie.CARGO_Y)
           Junk.drawJunk()
           pop()
         }
-        Magpie.drawMagpie({ rotation: this.physics.rotation, beam: this.beam });
-        if (game.debug) {
-          this.physics.draw();
+        Magpie.drawMagpie({rotation:this.physics.rotation,beam: this.beam})
+        if (game.debug){
+          this.physics.draw()
         }
       },
     });
-    pop();
+    pop()
   }
 
   /** Sets the captured junk to the given one, and turns off the beam. */
   captureJunk(junk) {
     this.capturedJunk = junk
-    this.enableBeam(false)
+    this.beam = false
   }
 
   // this method is static. That means it doesn't use `this` to gain access to
