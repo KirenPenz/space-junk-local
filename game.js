@@ -127,12 +127,18 @@ class Game {
    * is delivered.
    **/
   resolveDropoff(delta) {
-    // TODO (Phase 4): If the Magpie isn't carrying junk, return false. If
-    // the carried junk is within Mothership.PICKUP_DIAMETER / 2 of the
-    // Mothership, add delta to its dropoffTime. Otherwise, drain its
-    // dropoffTime by delta, but not below zero. Return true when dropoffTime
-    // is more than Game.JUNK_DROPOFF_TIME_MS.
-    return false;
+    let caughtJunk = this.magpie.capturedJunk
+    if (caughtJunk == null){
+      return false
+    }
+    let rad = Mothership.PICKUP_RADIUS
+    if(dist(this.mothership.physics.x,this.mothership.physics.y,caughtJunk.physics.x,caughtJunk.physics.y) < rad){
+      caughtJunk.dropoffTime += delta
+    }
+    else{
+      caughtJunk.dropoffTime = Math.max(0,caughtJunk.dropoffTime-delta)
+    }
+    return caughtJunk.dropoffTime > Game.JUNK_DROPOFF_TIME_MS
   }
 
   draw() {
@@ -161,8 +167,9 @@ class Game {
   }
 
   updateScore(reason) {
-    // TODO (Phase 4): When the reason is "dropoff", add Game.SCORE_DROPOFF
-    // to the score.
+    if (reason === "dropoff") {
+      this.score += Game.SCORE_DROPOFF
+    }
   }
 
   isLevelComplete() {
