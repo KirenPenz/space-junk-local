@@ -2,6 +2,7 @@ class Mothership {
   static WIDTH = 50;
   static HEIGHT = 20;
   static PICKUP_DIAMETER = Mothership.WIDTH * 1.2;
+  static PICKUP_RADIUS = Mothership.PICKUP_DIAMETER / 2;
   static CORNER_RADIUS = 8;
   static NUM_PORTHOLES = 4;
   static PORTHOLE_DIAMETER = 6;
